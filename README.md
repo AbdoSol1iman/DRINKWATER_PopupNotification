@@ -113,7 +113,7 @@ service = SoundService(SOUNDS_FOLDER, SOUND_GIF_MAP, interval_minutes=10)
 python3 main.py
 ```
 
-To stop it, press `Ctrl + C`.
+To stop it, press `Ctrl + Z`.
 
 ---
 
