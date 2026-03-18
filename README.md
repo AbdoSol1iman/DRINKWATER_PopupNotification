@@ -1,4 +1,3 @@
-# DRINKWATER_PopupNotification
 # DrinkWater - Popup Notification
 
 A lightweight background service that plays a random sound and displays an animated GIF popup notification at a set interval. Built to remind you to drink water, take a break, or anything else you want to be reminded of.
@@ -52,6 +51,24 @@ pip install Pillow pygame
 
 ---
 
+## Media Files
+
+The `sounds/` and `assets/` folders are not included in the repository due to file size.
+
+Download `media.zip` from the [Releases](../../releases) section, then extract it in the project folder:
+
+```bash
+unzip media.zip
+```
+
+This will create the `sounds/` and `assets/` folders with all required files automatically.
+
+Alternatively, you can use your own files:
+- Put your `.wav` sound files inside the `sounds/` folder
+- Put your `.gif` animation files inside the `assets/` folder
+
+---
+
 ## Setup
 
 **1. Clone the repository:**
@@ -65,10 +82,10 @@ cd DrinkWater-PopupNotification
 pip install Pillow pygame
 ```
 
-**3. Add your files:**
-
-- Put your `.wav` sound files inside the `sounds/` folder
-- Put your `.gif` animation files inside the `assets/` folder
+**3. Download and extract media files from the Releases section:**
+```bash
+unzip media.zip
+```
 
 **4. Edit `main.py` to map each sound to its GIF:**
 
@@ -110,7 +127,7 @@ mkdir -p ~/.config/systemd/user
 nano ~/.config/systemd/user/drinkwater.service
 ```
 
-**2. Paste the following, replacing the path and username with yours:**
+**2. Paste the following, replacing the path with yours:**
 ```ini
 [Unit]
 Description=DrinkWater Popup Notification
