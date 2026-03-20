@@ -1,12 +1,12 @@
 # DrinkWater - Popup Notification
 
-A lightweight background service that plays a random sound and displays an animated GIF popup notification at a set interval. Built to remind you to drink water, take a break, or anything else you want to be reminded of.
+A lightweight background service that plays a random video popup notification at a set interval. Built to remind you to drink water, take a break, or anything else you want to be reminded of.
 
 ---
 
 ## How It Works
 
-Every 10 minutes (configurable), the service picks a random `.wav` file from your `sounds/` folder, plays it, and shows an animated GIF popup in the bottom-right corner of your screen. The popup fades in, stays for 10 seconds, then fades out automatically.
+Every 10 minutes (configurable), the service picks a random `.mp4` file from your `videos/` folder and plays it in a popup window in the bottom-right corner of your screen. The popup fades in, stays for 10 seconds, then fades out automatically.
 
 ---
 
@@ -16,12 +16,10 @@ Every 10 minutes (configurable), the service picks a random `.wav` file from you
 DrinkWater-PopupNotification/
 ├── main.py
 ├── sound_service.py
-├── sound_player.py
+├── video_player.py
 ├── notification_manager.py
-├── sounds/
-│   └── your_sound.wav
-└── assets/
-    └── your_animation.gif
+└── videos/
+    └── your_video.mp4
 ```
 
 ---
@@ -36,24 +34,24 @@ Python 3.10 or higher.
 
 **On Debian / Ubuntu:**
 ```bash
-sudo apt install python3-tk python3-pygame
+sudo apt install python3-tk vlc
 ```
 
 **On Windows:**
 
-No system dependencies needed. Just install the Python packages below.
+Install VLC from https://www.videolan.org/vlc then install the Python packages below.
 
 ### Python Packages
 
 ```bash
-pip install Pillow pygame
+pip install python-vlc
 ```
 
 ---
 
 ## Media Files
 
-The `sounds/` and `assets/` folders are not included in the repository due to file size.
+The `videos/` folder is not included in the repository due to file size.
 
 Download `media.zip` from the [Releases](../../releases) section, then extract it in the project folder:
 
@@ -61,11 +59,9 @@ Download `media.zip` from the [Releases](../../releases) section, then extract i
 unzip media.zip
 ```
 
-This will create the `sounds/` and `assets/` folders with all required files automatically.
+This will create the `videos/` folder with all required files automatically.
 
-Alternatively, you can use your own files:
-- Put your `.wav` sound files inside the `sounds/` folder
-- Put your `.gif` animation files inside the `assets/` folder
+Alternatively, you can use your own `.mp4` files by placing them inside the `videos/` folder.
 
 ---
 
@@ -73,13 +69,14 @@ Alternatively, you can use your own files:
 
 **1. Clone the repository:**
 ```bash
-git clone https://github.com/your-username/DrinkWater-PopupNotification.git
-cd DrinkWater-PopupNotification
+git clone https://github.com/AbdoSol1iman/DRINKWATER_PopupNotification.git
+cd DRINKWATER_PopupNotification
 ```
 
 **2. Install dependencies:**
 ```bash
-pip install Pillow pygame
+sudo apt install vlc
+pip install python-vlc
 ```
 
 **3. Download and extract media files from the Releases section:**
@@ -87,20 +84,10 @@ pip install Pillow pygame
 unzip media.zip
 ```
 
-**4. Edit `main.py` to map each sound to its GIF:**
+**4. Set your preferred interval in `main.py`:**
 
 ```python
-SOUND_GIF_MAP = {
-    "your_sound.wav" : os.path.join(BASE_DIR, "assets", "your_animation.gif"),
-}
-```
-
-The key is the sound file name (without the full path), and the value is the full path to the GIF.
-
-**5. Set your preferred interval in `main.py`:**
-
-```python
-service = SoundService(SOUNDS_FOLDER, SOUND_GIF_MAP, interval_minutes=10)
+service = SoundService(VIDEOS_FOLDER, interval_minutes=10)
 ```
 
 ---
@@ -113,7 +100,7 @@ service = SoundService(SOUNDS_FOLDER, SOUND_GIF_MAP, interval_minutes=10)
 python3 main.py
 ```
 
-To stop it, press `Ctrl + Z`.
+To stop it, press `Ctrl + C`.
 
 ---
 
@@ -134,7 +121,7 @@ Description=DrinkWater Popup Notification
 After=graphical-session.target
 
 [Service]
-ExecStart=/usr/bin/python3 /full/path/to/DrinkWater-PopupNotification/main.py
+ExecStart=/usr/bin/python3 /full/path/to/DRINKWATER_PopupNotification/main.py
 Restart=always
 RestartSec=5
 Environment=DISPLAY=:0
@@ -187,7 +174,7 @@ This makes the service start automatically when you log in.
 - Trigger: When I log on
 - Action: Start a program
 - Program: `C:\Users\YourName\AppData\Local\Programs\Python\Python311\pythonw.exe`
-- Arguments: `"C:\full\path\to\DrinkWater-PopupNotification\main.py"`
+- Arguments: `"C:\full\path\to\DRINKWATER_PopupNotification\main.py"`
 
 Use `pythonw.exe` instead of `python.exe` to run without a console window.
 
@@ -205,15 +192,14 @@ All configuration is at the top of `main.py`:
 
 | Variable | Description |
 |---|---|
-| `SOUNDS_FOLDER` | Path to folder containing `.wav` files |
-| `SOUND_GIF_MAP` | Maps each sound file name to a GIF file path |
-| `interval_minutes` | How often to play a sound (default: 10) |
+| `VIDEOS_FOLDER` | Path to folder containing `.mp4` files |
+| `interval_minutes` | How often to show a notification (default: 10) |
 
 ---
 
 ## Notes
 
-- Only `.wav` audio files are supported.
+- Only `.mp4` video files are supported.
 - The popup appears in the bottom-right corner and auto-dismisses after 10 seconds.
 - On Linux with GNOME, make sure PulseAudio or PipeWire is running before the service starts.
 - The project uses relative paths, so it works on any machine without changing the code as long as the folder structure is preserved.
